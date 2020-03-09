@@ -1,0 +1,73 @@
+﻿@{
+
+    List<FrontierCodingTest.Models.AccountsByStatus> accountsByStatuses = ViewBag.AccountsByStatuses;
+}
+<article class="grid">
+
+    <header class="grid">
+
+        <div class="title-container">
+
+            <h1>Coding Test</h1>
+
+        </div>
+
+    </header>
+
+    <main class="content grid" id="home-content">
+
+        <div class="content-title-container">
+
+            <h2>Accounts</h2>
+
+        </div>
+
+        <section class="grid" id="account-grid">
+            @foreach (var accountsByStatus in accountsByStatuses)
+            {
+                string lowerstatus = @accountsByStatus.Status.ToString()[0].ToString().ToLower() + @accountsByStatus.Status.ToString().Substring(1);
+
+                <section class="account-column grid" id="@lowerstatus-account-column">
+
+                    <div class="account-container-title" id="@lowerstatus-account-container-title">
+
+                        <h3>@accountsByStatus.Status</h3>
+
+                    </div>
+                    @foreach (var account in accountsByStatus.Accounts)
+                    {
+
+                        <div class="account-container @lowerstatus-account">
+
+                            <ul class="account-data-list">
+
+                                <li><label>Name:</label> @account.LastName, @account.FirstName</li>
+
+                                <li><label>Email:</label>@account.Email</li>
+
+                                <li>
+                                    <label>Phone Number:</label>
+                                    @String.Format("{0:(###) ###-####}", Convert.ToDouble(account.PhoneNumber))
+
+
+                                </li>
+
+                                <li><label>Amount Due:</label>@(String.Format("{0:$#.00}", account.AmountDue)) USD</li>
+                                @if (account.PaymentDueDate != null)
+                                {
+                                    <li><label>Due Date:</label>@String.Format("{0:MM/dd/yyyy}", account.PaymentDueDate)</li>
+                                }
+                            </ul>
+
+                        </div>
+
+                    }
+                </section>
+
+            }
+
+
+        </section>
+
+    </main>
+</article>
